@@ -2,7 +2,7 @@ name: Main actions
 on: 
   workflow_dispatch:
   schedule:
-    - cron: "00 23 * * *"
+    - cron: "0 7 * * *"
 jobs:
   pull-redfin:
     name: Summarize Redfin
