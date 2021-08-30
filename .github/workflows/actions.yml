@@ -25,3 +25,16 @@ jobs:
           conda config --show
           python scripts/test.py
           echo "DONE"
+      - name: Commit files
+        shell: bash
+        run: |
+            git config --local user.email "ahy3nz@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add output/test.txt
+            git commit -m "Add changes" 
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: main
+        
