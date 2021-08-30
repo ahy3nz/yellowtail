@@ -28,10 +28,10 @@ jobs:
       - name: Commit files
         shell: bash
         run: |
-            git config --local user.email "ahy3nz@users.noreply.github.com"
+            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
             git add output/test.txt
-            git commit -m "Add changes" 
+            git commit -m "Update output (GHA)" 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
