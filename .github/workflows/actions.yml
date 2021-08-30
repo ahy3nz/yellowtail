@@ -35,7 +35,7 @@ jobs:
             git config --local user.name "github-actions[bot]"
             #git add output/test.txt
             git add output/listings.csv
-            git commit -m "Update output (GHA)" 
+            git commit --allow-empty -m "Update output (GHA)" 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
