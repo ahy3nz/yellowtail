@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import itertools as it
 import io
 import datetime
@@ -104,7 +105,12 @@ def main():
     )
 
     logger.info("Dumping data to disk ...")
-    final_df.to_csv("success.csv", index=False)
+    path_to_output = Path(__file__).parent / Path("../output/listings.csv")
+    final_df.to_csv(
+            path_to_output, index=False, mode='a',
+            header = not path_to_output.exists()
+    )
+
     duration = time.time() - start
     daskclient.close()
     logger.info(f"Scraping finished in {duration:.3f} seconds")
