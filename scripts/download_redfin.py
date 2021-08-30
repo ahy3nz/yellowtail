@@ -26,7 +26,8 @@ request_headers = {
 }
 
 relevant_columns = [
-    'ADDRESS', 'CITY', 'STATE OR PROVINCE', 'ZIP OR POSTAL CODE', "PRICE", "tax_assessed_value", 'overpriced'
+    'ADDRESS', 'CITY', 'STATE OR PROVINCE', 'ZIP OR POSTAL CODE', "PRICE", 
+    "tax_assessed_value", 'overpriced', 'date'
 ]
 
 def main():
@@ -106,7 +107,7 @@ def main():
     final_df.to_csv("success.csv", index=False)
     duration = time.time() - start
     daskclient.close()
-    logger.info("Scraping finished in {:.3f} seconds")
+    logger.info(f"Scraping finished in {duration:.3f} seconds")
 
 def stitch_full_address(row):
     """ Given a house record from redfin, generate a full address for future querying """
