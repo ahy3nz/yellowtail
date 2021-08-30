@@ -70,7 +70,7 @@ def main():
         pd
         .read_csv(
             io.StringIO(download.content.decode("utf-8")),
-            low_memory=False
+            low_memory=False, error_bad_lines=False
         )
         .assign(full_address=lambda x: x.apply(stitch_full_address, axis=1))
     )
