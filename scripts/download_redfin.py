@@ -67,7 +67,11 @@ def main():
         )
     logger.info("Transforming into table of listings ...")
     df = (
-        pd.read_csv(io.StringIO(download.content.decode("utf-8")))
+        pd
+        .read_csv(
+            io.StringIO(download.content.decode("utf-8")),
+            low_memory=False
+        )
         .assign(full_address=lambda x: x.apply(stitch_full_address, axis=1))
     )
 
