@@ -1,5 +1,8 @@
 name: Main actions
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: 0 17 * * *
 jobs:
   pull-redfin:
     name: Summarize Redfin
