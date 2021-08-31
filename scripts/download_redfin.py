@@ -32,6 +32,7 @@ relevant_columns = [
 ]
 
 def main():
+    """ Take a snapshot of Redfin listings """
     start = time.time()
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     logger.info(f"Initializing on {timestamp}...")
@@ -96,6 +97,7 @@ def main():
             compile_results(completed_results), 
             left_on='full_address', right_index=True
         ).assign(
+            # Computing the overpriced amount unnecessary
             #overpriced=lambda x: x['PRICE'] - x['tax_assessed_value'],
             date=timestamp
         )
