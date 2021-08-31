@@ -19,22 +19,25 @@ jobs:
           environment-file: envs/env.yml
           miniforge-variant: Mambaforge
           use-mamba: true
-      - name: Run redfin script
+      - name: Download Redfin snapshot
         shell: bash -l {0}
         run: |
           conda info
           conda list
           conda config --show-sources
           conda config --show
-          #python scripts/test.py
           python scripts/download_redfin.py
+      - name: Summarize Redfin snapshot
+        shell: bash -l {0}
+        run: |
+          python scripts/incremental_summarize.py
       - name: Commit files
         shell: bash
         run: |
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
-            #git add output/test.txt
             git add output/listings.csv.gz
+            git add output/per_day_summary.csv
             git commit --allow-empty -m "Update output (GHA)" 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
