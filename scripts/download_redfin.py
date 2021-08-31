@@ -96,7 +96,7 @@ def main():
             compile_results(completed_results), 
             left_on='full_address', right_index=True
         ).assign(
-            overpriced=lambda x: x['PRICE'] - x['tax_assessed_value'],
+            #overpriced=lambda x: x['PRICE'] - x['tax_assessed_value'],
             date=timestamp
         )
     )
