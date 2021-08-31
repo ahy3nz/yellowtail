@@ -24,6 +24,7 @@ def main():
     df = (
         pd.read_csv(filepath, parse_dates=['date'])
         .assign(overpriced=lambda x: x['PRICE'] - x['tax_assessed_value'])
+        .query('tax_assessed_value > 0 & overpriced < 200_000')
     )
     logger.info("Summarizing listings...")
     summary_df = (
