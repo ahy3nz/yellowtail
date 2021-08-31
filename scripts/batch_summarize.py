@@ -4,6 +4,7 @@ import datetime
 import time
 
 import pandas as pd
+import numpy as np
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -23,6 +24,7 @@ def main():
     logger.info("Loading all Redfin listings...")
     df = (
         pd.read_csv(filepath, parse_dates=['date'])
+        .query('tax_assessed_value > 0')
         .assign(overpriced=lambda x: x['PRICE'] - x['tax_assessed_value'])
     )
     logger.info("Summarizing listings...")
@@ -33,7 +35,7 @@ def main():
             'ADDRESS': 'count',
             'PRICE': ['mean', 'median'],
             'tax_assessed_value': ['mean', 'median'],
-            'overpriced': ['mean', 'median']
+            'overpriced': [adjusted_mean, adjusted_median]
         })
     )
     logger.info("Flattening columns...")
@@ -44,6 +46,25 @@ def main():
     
     duration = time.time() - start
     logger.info(f"Completed in {duration} seconds")
+    
+    
+def adjusted_mean(grouped, threshold=200_000):
+    """ Compute mean overpriced amount excluding new-builds,
+    where new-builds are extremely overpriced relative to 
+    out-of-date tax-assessed values
+    """
+    overpriced_amounts = [val for val in grouped if val < threshold]
+    return np.mean(overpriced_amounts)
+
+
+def adjusted_median(grouped, threshold=200_000):
+    """ Compute median overpriced amount excluding new-builds,
+    where new-builds are extremely overpriced relative to 
+    out-of-date tax-assessed values
+    """
+    overpriced_amounts = [val for val in grouped if val < threshold]
+    return np.median(overpriced_amounts)
+
 
     
 if __name__ == "__main__":
