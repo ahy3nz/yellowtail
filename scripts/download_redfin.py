@@ -109,15 +109,17 @@ def main():
     )
 
     logger.info("Dumping data to disk ...")
-    path_to_output = Path(__file__).parent / Path("../output/listings.csv")
+    path_to_output = Path(__file__).parent / Path("../output/listings.csv.gz")
     final_df.to_csv(
             path_to_output, index=False, mode='a',
-            header = not path_to_output.exists()
+            header=not path_to_output.exists(),
+            compression='gzip'
     )
 
     duration = time.time() - start
     daskclient.close()
     logger.info(f"Scraping finished in {duration:.3f} seconds")
+
 
 def stitch_full_address(row):
     """ Given a house record from redfin, generate a full address for future querying """
