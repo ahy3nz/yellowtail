@@ -1,0 +1,13 @@
+name: yellowtail_ci
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - numpy
+  - dask==2021.7.*
+  - requests
+  - python >= 3.8
+  - pip
+  - pytest
+  - pip:
+    - redfin
