@@ -28,7 +28,7 @@ request_headers = {
 
 relevant_columns = [
     'ADDRESS', 'CITY', 'STATE OR PROVINCE', 'ZIP OR POSTAL CODE', "PRICE", 
-    "tax_assessed_value", 'overpriced', 'date'
+    "tax_assessed_value", 'date'
 ]
 
 def main():
@@ -73,7 +73,11 @@ def main():
             io.StringIO(download.content.decode("utf-8")),
             low_memory=False, error_bad_lines=False
         )
-        .assign(full_address=lambda x: x.apply(stitch_full_address, axis=1))
+        #.assign(full_address=lambda x: x.apply(stitch_full_address, axis=1))
+        .assign(
+            full_address=lambda x: x['ADDRESS'] + ', ' + x['CITY'] 
+                + ' ' + x['STATE OR PROVINCE']
+        )
     )
 
     with requests.Session() as session:
