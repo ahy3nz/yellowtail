@@ -19,11 +19,11 @@ streamhandler.setLevel(logging.DEBUG)
 logger.addHandler(streamhandler)
 
 request_headers = {
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng.*/*;q=0.8',
-    'accept-encoding':'gzip, deflate, br',
-    'accept-language': 'en-US,en;q=0.8',
-    'upgrade-insecure-requests': '1',
-    'user-agent': 'Chrome/92.0.4515.130'
+#    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng.*/*;q=0.8',
+#    'accept-encoding':'gzip, deflate, br',
+#    'accept-language': 'en-US,en;q=0.8',
+#    'upgrade-insecure-requests': '1',
+    'user-agent': 'yellow-tail/0.0.1'
 }
 
 relevant_columns = [

@@ -26,11 +26,11 @@ jobs:
           conda list
           conda config --show-sources
           conda config --show
-          python scripts/download_redfin.py
+          python scripts/pull_redfin.py
       - name: Summarize Redfin snapshot
         shell: bash -l {0}
         run: |
-          python scripts/incremental_summarize.py
+          python scripts/summarize.py --incremental
       - name: Commit files
         shell: bash
         run: |

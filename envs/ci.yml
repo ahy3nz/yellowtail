@@ -1,4 +1,4 @@
-name: yellowtail
+name: yellowtail_ci
 channels:
   - defaults
   - conda-forge
@@ -8,6 +8,6 @@ dependencies:
   - requests
   - python >= 3.8
   - pip
+  - pytest
   - pip:
     - redfin
-    - typer
