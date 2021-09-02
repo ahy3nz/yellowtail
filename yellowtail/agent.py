@@ -1,10 +1,13 @@
 from dataclasses import dataclass, field
 import datetime
 import io
+import itertools as it
+import json
 from typing import Dict, Union, List
 
 import pandas as pd
 import requests
+from redfin import Redfin
 from dask import delayed
 from dask.distributed import Client, as_completed
 
@@ -98,14 +101,14 @@ class Agent:
             session_scattered = daskclient.scatter(session)
             redfinclient_scattered = daskclient.scatter(redfinclient)
             futures = [
-                delayed(query_redfin_dask)(self, session_scattered, 
+                delayed(self.query_redfin_dask)(session_scattered, 
                     redfinclient_scattered, address)
                 for address in list_of_addresses
             ]
             futures = daskclient.compute(futures)
             completed_results = [
-                    result for a, result in 
-                    as_completed(futures, raise_errors=False, with_results=True)
+                result for a, result in 
+                as_completed(futures, raise_errors=False, with_results=True)
             ]
         daskclient.close() 
         
@@ -141,7 +144,7 @@ class Agent:
         return {address: self.process_redfin_response(response, redfinclient)}
     
     
-    def process_redfin_response(response, redfinclient):
+    def process_redfin_response(self, response, redfinclient):
         """ Given a response from redfin API, return the tax-assessed value
 
         Notes
