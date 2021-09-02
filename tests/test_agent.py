@@ -64,3 +64,14 @@ def test_compile_results():
         {'b': 42}
     ])
     assert isinstance(compiled, pd.Series)
+    
+def test_full_runthrough():
+    agent = Agent()
+
+    download = agent.pull_listings()
+
+    digest = agent.digest_listings(download)
+
+    details = agent.pull_details(digest['full_address'].to_list())
+
+    processed_df = agent.digest_details(digest, details)

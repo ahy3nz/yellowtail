@@ -29,7 +29,7 @@ def main():
     digest = agent.digest_listings(download)
 
     logger.info("Accessing below-the-fold listing information...")
-    details = agent.pull_details(digest['full_address'].to_list()[:2])
+    details = agent.pull_details(digest['full_address'].to_list())
 
     logger.info("Compiling all listing information...")
     processed_df = agent.digest_details(digest, details)
