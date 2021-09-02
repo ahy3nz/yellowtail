@@ -17,7 +17,22 @@ REDFIN_ENDPOINT='https://www.redfin.com/stingray/api/gis-csv?'
 
 def gen_headers():
     """ Request headers"""
-    return {'user-agent': 'yellow-tail/0.0.1'}
+    headers = {
+        'authority': 'www.redfin.com',
+        'content-length': '0',
+        'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
+        'sec-ch-ua-mobile': '?0',
+        'user-agent': 'Mozilla/5.0 (X11; CrOS x86_64 13982.82.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.157 Safari/537.36',
+        'content-type': 'text/plain;charset=UTF-8',
+        'accept': '*/*',
+        'origin': 'https://www.redfin.com',
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-mode': 'no-cors',
+        'sec-fetch-dest': 'empty',
+        'referer': 'https://www.redfin.com/city/12839/DC/Washington-DC',
+        'accept-language': 'en-US,en;q=0.9',
+    }
+    return headers 
 
 
 def gen_params():
