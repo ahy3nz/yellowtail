@@ -38,7 +38,6 @@ def main():
     final_df = (
         processed_df
         .query('tax_assessed_value > 0')
-        [agent.keep_cols]
     )
 
     logger.info("Dumping data to disk ...")
@@ -50,7 +49,6 @@ def main():
     )
 
     duration = time.time() - start
-    daskclient.close()
     logger.info(f"Scraping finished in {duration:.3f} seconds")
 
 

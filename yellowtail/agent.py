@@ -52,6 +52,14 @@ def gen_cols():
     return relevant_columns
 
 
+def gen_final_cols():
+    final_columns = [
+        'ADDRESS', 'CITY', 'STATE OR PROVINCE', 'ZIP OR POSTAL CODE', "PRICE", 
+        'tax_assessed_value', 'date'
+    ]
+    return final_columns
+
+
 @dataclass
 class Agent:
     """ Stores Redfin query parameters, runs Redfin
@@ -59,6 +67,7 @@ class Agent:
     request_headers: Dict[str, str] = field(default_factory=gen_headers)
     redfin_query_params: Dict[str, Union[int, str]] = field(default_factory=gen_params)
     keep_cols: List[str] = field(default_factory=gen_cols)
+    final_cols: List[str] = field(default_factory=gen_final_cols)
         
         
     def pull_listings(self):
@@ -131,10 +140,10 @@ class Agent:
             df.merge(
                 self.compile_results(completed_results), 
                 left_on='full_address', right_index=True
-            ).assign(date=timestamp)
+            ).assign(date=timestamp) 
         )
         
-        return processed_df
+        return processed_df[self.final_cols]
         
         
     def query_redfin_dask(
