@@ -40,7 +40,6 @@ def main():
         .query('tax_assessed_value > 0')
         [agent.keep_cols]
     )
-    import pdb; pdb.set_trace()
 
     logger.info("Dumping data to disk ...")
     path_to_output = Path(__file__).parent / Path("../output/listings.csv.gz")
