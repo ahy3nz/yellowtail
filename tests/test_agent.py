@@ -43,18 +43,23 @@ def test_digest_listings(mock_pull_listings):
 def test_digest_details():
     agent = Agent()
     df = pd.DataFrame({
+        'ADDRESS': ['a', 'b'],
+        'CITY': ['a', 'b'],
+        'STATE OR PROVINCE': ['a', 'b'],
+        'ZIP OR POSTAL CODE': ['a', 'b'],
+        'PRICE': ['a', 'b'],
         'full_address': ['a', 'b']
     })
     prices = pd.Series([
         {'a': 100},
-        {'b':42}
+        {'b': 42}
     ], name='tax_assessed_value')
     digest = agent.digest_details(df, prices)
     
     assert isinstance(digest, pd.DataFrame)
-    assert 'full_address' in digest.columns
     assert 'tax_assessed_value' in digest.columns
     assert 'date' in digest.columns
+    
     
 def test_compile_results():
     agent = Agent()
@@ -70,7 +75,7 @@ def test_full_runthrough():
 
     download = agent.pull_listings()
 
-    digest = agent.digest_listings(download)
+    digest = agent.digest_listings(download).iloc[:2]
 
     details = agent.pull_details(digest['full_address'].to_list())
 
