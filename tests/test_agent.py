@@ -6,8 +6,14 @@ import pandas as pd
 from yellowtail import Agent
 from yellowtail.agent import gen_cols
 
-def test_pull_listings():
+@patch('yellowtail.Agent.pull_listings')
+def test_pull_listings(mock_pull):
     agent = Agent()
+    
+    mockresponse = Response()
+    mockresponse.status_code = 200
+    mock_pull.return_value = mockresponse
+    
     response = agent.pull_listings()
     assert response.status_code == 200
     
