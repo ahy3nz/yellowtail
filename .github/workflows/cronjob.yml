@@ -26,6 +26,7 @@ jobs:
           conda list
           conda config --show-sources
           conda config --show
+          python -m pip install -e .
           python scripts/pull_redfin.py
       - name: Summarize Redfin snapshot
         shell: bash -l {0}
