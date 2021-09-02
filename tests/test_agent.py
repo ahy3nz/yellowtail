@@ -75,7 +75,7 @@ def test_full_runthrough():
 
     download = agent.pull_listings()
 
-    digest = agent.digest_listings(download)
+    digest = agent.digest_listings(download).iloc[:2]
 
     details = agent.pull_details(digest['full_address'].to_list())
 
