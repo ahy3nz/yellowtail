@@ -26,6 +26,7 @@ def test_digest_listings(mock_pull_listings):
     mock_csv = pd.DataFrame({c: ['foo'] for c in columns_to_mock}).to_csv(index=False)
     mock_response = Response()
     mock_response._content = str.encode(mock_csv)
+    mock_response.status_code = 200
     mock_pull_listings.return_value = mock_response
     
     download = agent.pull_listings()

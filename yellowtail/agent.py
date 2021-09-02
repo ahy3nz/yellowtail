@@ -72,8 +72,13 @@ class Agent:
         return download
             
         
-    def digest_listings(self, download):
+    def digest_listings(self, download: requests.Response):
         """ Convert get request into dataframe"""
+        if download.status_code != 200:
+            raise RuntimeError(
+                "Error making listings request: " +
+                f"{download.content.decode('UTF-8')}"
+            )
         df = pd.read_csv(
             io.StringIO(download.content.decode("utf-8")),
             low_memory=False, error_bad_lines=False
@@ -115,7 +120,11 @@ class Agent:
         return completed_results
     
     
-    def digest_details(self, df, completed_results):
+    def digest_details(
+        self, 
+        df: pd.DataFrame, 
+        completed_results: List[Dict[str, float]]
+    ):
         """ Process below-the-fold responses into dataframe"""
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
         processed_df = (
@@ -128,7 +137,13 @@ class Agent:
         return processed_df
         
         
-    def query_redfin_dask(self, session, redfinclient, address, **kwargs):
+    def query_redfin_dask(
+        self, 
+        session: requests.Session, 
+        redfinclient: Redfin, 
+        address: str, 
+        **kwargs
+    ):
         """ For a given address, query redfin and identify tax-assessed value
 
         This is the function we submit to the dask client
@@ -144,7 +159,11 @@ class Agent:
         return {address: self.process_redfin_response(response, redfinclient)}
     
     
-    def process_redfin_response(self, response, redfinclient):
+    def process_redfin_response(
+        self, 
+        response: requests.Response, 
+        redfinclient: Redfin
+    ):
         """ Given a response from redfin API, return the tax-assessed value
 
         Notes
@@ -188,7 +207,7 @@ class Agent:
                 return -1
 
             
-    def compile_results(self, results):
+    def compile_results(self, results: List[Dict[str, float]]):
         """ Aggregate the results from all the redfin requests into a single series
 
         Take a list of dictionaries (from the dask future objects), 
